@@ -1,65 +1,66 @@
 import Image from "next/image";
+import TextImage from "./TextImage";
+import Bordered from "./Bordered";
+import { FaGithub, FaLinkedin, FaMedium } from "react-icons/fa";
+import Project from "./Project";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="flex flex-col items-center justify-center">
+      {/* HEADER */}
+      <div className="p-2 flex flex-row items-center gap-8">
+        <div className="flex flex-col items-center w-[60%]">
+          <TextImage />
+        </div>
+        <div className="flex flex-col items-center w-[30%]">
+          <h1>Om_Panchal</h1>
+          <div className="flex flex-row items-center justify-center gap-2 w-full">
+            <a href="https://github.com/OmPanchal">
+              <FaGithub size={28} />
+            </a>
+            <a href="https://www.linkedin.com/in/panchal-om/">
+              <FaLinkedin size={28} />
+            </a>
+            <a href="https://medium.com/@om_panchal">
+              <FaMedium size={28} />
+            </a>
+          </div>
+        </div>
+      </div>
+      <div className="mt-2 flex flex-col gap-4 items-center lg:w-[40%] w-[75%]">
+        {/* PROJECTS */}
+        {/* <div className="border w-full"></div> */}
+        <p>
+          I am a first year Computer Science student at the University of
+          Warwick. I like coding things from scratch and doing maths. I play
+          badminton and do origami.
+        </p>
+        <div className="border w-full"></div>
+        <p>
+          <u>My Projects</u>
+        </p>
+        <Project
+          name="bren"
+          description="A simple numpy based neural network library inspired by Tensorflow/Keras"
+          link="https://pypi.org/project/bren/"
+          date="07/08/2023"
+          skills="python numpy tensorflow keras neural_networks"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+        <Project
+          name="AlexNet using tensorflow"
+          description="AlexNet using tensorflow and keras in python"
+          link="https://github.com/OmPanchal/AlexNet-using-tensorflow"
+          date="20/10/2023"
+          skills="python numpy automatic_differentiation binary_trees"
+        />
+        <Project
+          name="Autodiff"
+          description="A Simple Automatic Differentiation Library | A library that algorithmically calculates derivatives | Differentiation Calculator"
+          link="https://pypi.org/project/python-autodiff/"
+          date="07/09/2025"
+          skills="python numpy automatic_differentiation binary_trees"
+        />
+      </div>
     </div>
   );
 }
