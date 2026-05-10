@@ -69,7 +69,7 @@ const TextImage = () => {
         <<++    ::++!!LL^^,,,,::::::::::--......''''....------''''::::,,::::.... `;
 
   return (
-    <p className="whitespace-pre-wrap font-[space-mono-b] lg:text-[4px] md:text-[4px] text-[3px] sm:tracking-[0.9px] tracking-[0.7px]">
+    <p className="whitespace-pre-wrap font-[space-mono-b] text-[2.5px] sm:tracking-[0.8px] tracking-[0.7px]">
       {f}
     </p>
   );

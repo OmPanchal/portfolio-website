@@ -1,8 +1,10 @@
 import React from "react";
 
-const Text = ({ className, children }) => {
+const Text = ({ className, weight = "r", children }) => {
   return (
-    <p className={`font-[space-mono-r] text-[16px] ${className}`}>{children}</p>
+    <p className={`font-[space-mono-${weight}] text-[16px] ${className}`}>
+      {children}
+    </p>
   );
 };
 
