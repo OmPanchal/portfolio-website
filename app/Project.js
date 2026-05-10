@@ -13,7 +13,7 @@ const Project = ({ name, description, link, date, skills }) => {
         </div>
         <p>{description}</p>
       </Bordered>
-      <div className="flex flex-row gap-4 items-center justify-center py-2 overflow-auto">
+      <div className="flex flex-row gap-4 items-center justify-center py-2 w-full text-wrap">
         {skills.split(" ").map((element, idx) => {
           return <p key={idx}>~{element}~</p>;
         })}

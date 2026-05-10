@@ -7,32 +7,25 @@
 
 @font-face {
   font-family: space-mono-r;
-  src: url(./fonts/Space_Mono/SpaceMono-Regular.ttf);
+  src: url(../fonts/Space_Mono/SpaceMono-Regular.ttf);
 }
 
 @font-face {
   font-family: space-mono-b;
-  src: url(./fonts/Space_Mono/SpaceMono-Bold.ttf);
+  src: url(../fonts/Space_Mono/SpaceMono-Bold.ttf);
 }
 
 @font-face {
   font-family: courier-prime-b;
-  src: url(./fonts/Courier_Prime/Courier_Prime.ttf);
+  src: url(../fonts/Courier_Prime/Courier_Prime.ttf);
 }
 
 @font-face {
   font-family: fira-mono-r;
-  src: url(./fonts/Fira_Mono/FiraMono-Regular.ttf);
+  src: url(../fonts/Fira_Mono/FiraMono-Regular.ttf);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-size: 17px;
-  font-family: space-mono-r;
-}
-
-h1 {
-  font-family: space-mono-b;
-  font-size: 42px;
 }
