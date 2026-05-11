@@ -5,6 +5,9 @@
   --foreground: #ffffff;
 }
 
+@theme {
+}
+
 @font-face {
   font-family: space-mono-r;
   src: url(../fonts/Space_Mono/SpaceMono-Regular.ttf);
