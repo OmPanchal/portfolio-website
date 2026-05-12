@@ -1,9 +1,8 @@
 import React from "react";
-import Bordered from "../Bordered";
-import Header from "../Header";
 import PageBorder from "../PageBorder";
+import Header from "../Header";
 
-const Projects = () => {
+const page = () => {
   return (
     <PageBorder>
       <Header />
@@ -11,4 +10,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default page;
