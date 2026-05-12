@@ -12,7 +12,9 @@ const HomeContent = () => {
           <SocialRack />
         </div>
       </div>
-      <Text className="lg:max-w-180 max-w-150">Welcome to my website!!!</Text>
+      <Text className="lg:max-w-180 max-w-150 font-[space-mono-r]">
+        Welcome to my website!!!
+      </Text>
     </>
   );
 };

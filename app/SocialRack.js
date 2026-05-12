@@ -4,7 +4,7 @@ import { FaGithub, FaLinkedin, FaMedium } from "react-icons/fa";
 
 const SocialRack = () => {
   return (
-    <div className="flex flex-row items-center justify-center gap-6 w-full">
+    <div className="flex flex-row items-center justify-center gap-4 w-full">
       <Link
         className="hover:scale-110 transition-all"
         href="https://github.com/OmPanchal"
