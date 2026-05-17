@@ -1,7 +1,6 @@
 import React from "react";
-import Bordered from "../Bordered";
-import Header from "../Header";
-import PageBorder from "../PageBorder";
+import Header from "../../components/Header";
+import PageBorder from "../../components/PageBorder";
 
 const Projects = () => {
   return (

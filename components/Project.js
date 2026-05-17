@@ -1,5 +1,5 @@
 import React from "react";
-import Bordered from "./Bordered";
+import Bordered from "../components/Bordered";
 
 const Project = ({ name, description, link, date, skills }) => {
   return (
