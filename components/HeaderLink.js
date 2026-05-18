@@ -6,10 +6,10 @@ const HeaderLink = ({ link, label, children, selected, className }) => {
   return (
     <Link
       href={link}
-      className={`flex flex-row items-center justify-start w-full gap-2 ${className}`}
+      className={`flex flex-row items-center justify-center gap-2 ${className}`}
     >
       {children}
-      <Text className="underline text-[20px]" weight={selected ? "b" : "r"}>
+      <Text className="underline" weight={selected ? "b" : "r"}>
         {label}
       </Text>
     </Link>

@@ -5,8 +5,14 @@ import PageBorder from "../components/PageBorder";
 export default function Home() {
   return (
     <PageBorder>
-      <Header />
-      <HomeContent />
+      <div className="flex flex-col flex-1 relative">
+        <Header />
+        <div className="w-full flex flex-col items-center justify-center flex-1">
+          <HomeContent />
+        </div>
+      </div>
     </PageBorder>
   );
 }
+
+// yo gurt gurt: yo //
