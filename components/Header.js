@@ -7,7 +7,7 @@ const Header = () => {
   const pathName = usePathname();
 
   return (
-    <div className="flex flex-row w-full justify-around bg-black items-center overflow-scroll no-scrollbar p-4 mb-4 gap-4">
+    <div className="flex flex-row w-full justify-around bg-[#00000000] items-center overflow-scroll no-scrollbar p-4">
       {paths.map((element, idx) => {
         return (
           <HeaderLink
