@@ -3,11 +3,7 @@ import PageBorder from "../../components/PageBorder";
 import Header from "../../components/Header";
 
 const page = () => {
-  return (
-    <PageBorder>
-      <Header />
-    </PageBorder>
-  );
+  return <PageBorder></PageBorder>;
 };
 
 export default page;
