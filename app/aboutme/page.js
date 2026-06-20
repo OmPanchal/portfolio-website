@@ -1,9 +1,7 @@
 import React from "react";
-import PageBorder from "../../components/PageBorder";
-import Header from "../../components/Header";
 
 const page = () => {
-  return <PageBorder></PageBorder>;
+  return <div></div>;
 };
 
 export default page;
