@@ -3,7 +3,7 @@ import { PiBird } from "react-icons/pi";
 import { generatePathDetails } from "./functions";
 
 export const paths = [
-  generatePathDetails("/", <IoHomeOutline />, "HOME"),
-  generatePathDetails("/aboutme", <PiBird />, "ABOUT_ME"),
-  generatePathDetails("/projects", <IoCodeSlashSharp />, "PROJECTS"),
+  { name: "Home", path: "/" },
+  { name: "About me", path: "/aboutme" },
+  { name: "Projects", path: "/projects" },
 ];
