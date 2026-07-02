@@ -4,7 +4,7 @@ import { MdArrowRightAlt } from "react-icons/md";
 
 const HomeContent = () => {
   return (
-    <div className="select-none flex flex-col flex-1 h-full w-full items-center">
+    <div className="select-none flex flex-col flex-1 h-full w-full items-center p-6">
       <HomeHeader />
       <div className="h-full flex-1 w-full flex flex-col text-center items-center justify-center">
         <h1 className="md:text-5xl text-2xl p-8">Welcome to my website.</h1>
