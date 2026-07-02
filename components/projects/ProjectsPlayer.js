@@ -1,5 +1,5 @@
 const ProjectsPlayer = () => {
-  return;
+  return <div></div>;
 };
 
 export default ProjectsPlayer;
