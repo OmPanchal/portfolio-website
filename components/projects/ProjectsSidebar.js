@@ -3,14 +3,22 @@ import { usePathname } from "next/navigation";
 import ProjectsLogo from "./ProjectsLogo";
 import { paths } from "@/utils/constants";
 import ProjectsSidebarLink from "./ProjectsSidebarLink";
+import { useState } from "react";
+import { useGlobals } from "@/context/GeneralContext";
+import {
+  MdKeyboardAlt,
+  MdKeyboardArrowLeft,
+  MdOutlineKeyboardArrowLeft,
+} from "react-icons/md";
 
 const ProjectsSidebar = () => {
   const pathName = usePathname();
-
-  // 2xl show sidebar player else show bottom drawer player?
+  const { isProjectsSidebarOpen, setIsProjectsSidebarOpen } = useGlobals();
 
   return (
-    <div className="flex flex-col items-start lg:w-[15%] w-full absolute lg:min-w-fit h-svh bg-black border-r border-r-gray-700 p-8 gap-8 ">
+    <div
+      className={`flex flex-col items-start duration-300 transition-all lg:w-[15%] w-full absolute lg:relative lg:left-0 z-10 lg:min-w-fit h-svh bg-black border-r border-r-gray-700 p-8 gap-8 ${isProjectsSidebarOpen ? "left-0" : "-left-full"}`}
+    >
       <ProjectsLogo />
       <div className="flex flex-col items-center justify-start w-full flex-1">
         <div className="flex flex-col w-full items-center gap-2">
@@ -21,14 +29,21 @@ const ProjectsSidebar = () => {
                 key={i}
                 href={path.path}
                 name={path.name}
-                icon={path.icon}
+                icon={path.projectsIcon}
               />
             );
           })}
         </div>
       </div>
       <div className="flex flex-row items-center w-full justify-end">
-        {/* doh*/}
+        <button
+          className="scale-100 lg:scale-0"
+          onClick={() => {
+            setIsProjectsSidebarOpen(!isProjectsSidebarOpen);
+          }}
+        >
+          <MdOutlineKeyboardArrowLeft className="p-3 size-12 border-gray-700 border rounded-full" />
+        </button>
       </div>
     </div>
   );
