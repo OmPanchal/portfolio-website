@@ -4,7 +4,19 @@ import { generatePathDetails } from "./functions";
 import { CiHome, CiMusicNote1, CiUser } from "react-icons/ci";
 
 export const paths = [
-  { name: "Home", path: "/", icon: <CiHome size={42} /> },
-  { name: "About me", path: "/aboutme", icon: <CiUser size={42} /> },
-  { name: "Projects", path: "/projects", icon: <CiMusicNote1 size={42} /> },
+  {
+    name: "Home",
+    path: "/",
+    projectsIcon: <CiHome className="lg:size-10 size-6" />,
+  },
+  {
+    name: "About me",
+    path: "/aboutme",
+    projectsIcon: <CiUser className="lg:size-10 size-6" />,
+  },
+  {
+    name: "Projects",
+    path: "/projects",
+    projectsIcon: <CiMusicNote1 className="lg:size-10 size-6" />,
+  },
 ];
