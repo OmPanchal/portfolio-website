@@ -8,9 +8,9 @@ const ProjectsLogo = () => {
       <Image
         src={logo}
         alt="logo"
-        className="w-16 group-hover:animate-spin border-gray-600 border rounded-full"
+        className="lg:w-16 w-12 group-hover:animate-spin border-gray-600 border rounded-full"
       />
-      <p className="font-[Unbound] font-extrabold text-[36px] text-gray-200 transition-all group-hover:text-white">
+      <p className="font-[Unbound] font-extrabold lg:text-[36px] text-[28px] text-gray-200 transition-all group-hover:text-white">
         m Panchal
       </p>
     </div>
