@@ -1,5 +1,4 @@
 "use client";
-
 import { useGlobals } from "@/context/GeneralContext";
 
 const ProjectsPlayer = () => {

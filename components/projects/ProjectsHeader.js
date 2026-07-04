@@ -1,6 +1,5 @@
 "use client";
 import { useGlobals } from "@/context/GeneralContext";
-import { CiMenuBurger } from "react-icons/ci";
 import { IoMdMenu } from "react-icons/io";
 
 const ProjectsHeader = () => {
