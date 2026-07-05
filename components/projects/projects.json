@@ -1,0 +1,38 @@
+{
+  "projects": [
+    {
+      "name": "bren",
+      "authors": [
+        { "name": "Om Panchal", "link": "https://github.com/OmPanchal" }
+      ],
+      "cover": "/covers/bren.png",
+      "released": "26/08/2024",
+      "links": [
+        "https://github.com/OmPanchal/bren",
+        "https://pypi.org/project/bren/"
+      ],
+      "languages": ["python"],
+      "description": "bren is a custom numpy based library, powered by automatic differentiation, inspired by Tensorflow/Keras, which allows users to build small scale simple neural networks. It's analogous yet simpler design to the Keras API allows users to produce, train and save their own models, with custom components, without having to learn an entirely new structure. \n\n bren is part of a sequence of neural network from scratch projects and a successor to the neural-network-from-scratch-v2, with one major update being the integration of automatic differentitation. Automatic differentiation allows for the real-time determination of derivatives during backpropagation (through the use of computation graphs produced by br.autodiff and br.Variable) and reduces the need for users to couple mathematical computation with pre-written derivatives as was required in the previous projects.",
+      "playlist": ["from scratch"],
+      "album": "AI from scratch",
+      "tags": ["ml/dl", "neural networks", "numpy"]
+    },
+    {
+      "name": "Autodiff",
+      "authors": [
+        { "name": "Om Panchal", "link": "https://github.com/OmPanchal" }
+      ],
+      "cover": "/covers/autodiff.png",
+      "released": "04/09/2025",
+      "links": [
+        "https://github.com/OmPanchal/Autodiff",
+        "https://pypi.org/project/python-autodiff/"
+      ],
+      "languages": ["python"],
+      "description": "autodiff is an Automatic Differentiation library created purely using numpy and python which allows users to evaluate the derivatives of multivariable functions. \n\n This is an improvement to the automatic differentiation system featured in bren, which tackles two main limitations of the library. First, it allows for higher derivatives to be calculated with the previous version being limited to only the first. Next, this new version introduces reusability of already traversed graph structures.",
+      "playlist": ["from scratch"],
+      "album": "AI from scratch",
+      "tags": ["automatic differentitation", "graphs/trees", "ml/dl", "numpy"]
+    }
+  ]
+}
