@@ -3,13 +3,8 @@ import { usePathname } from "next/navigation";
 import ProjectsLogo from "./ProjectsLogo";
 import { paths } from "@/utils/constants";
 import ProjectsSidebarLink from "./ProjectsSidebarLink";
-import { useState } from "react";
 import { useGlobals } from "@/context/GeneralContext";
-import {
-  MdKeyboardAlt,
-  MdKeyboardArrowLeft,
-  MdOutlineKeyboardArrowLeft,
-} from "react-icons/md";
+import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 
 const ProjectsSidebar = () => {
   const pathName = usePathname();
@@ -17,7 +12,7 @@ const ProjectsSidebar = () => {
 
   return (
     <div
-      className={`flex flex-col items-start duration-300 transition-all lg:w-[15%] w-full absolute lg:relative lg:left-0 z-10 lg:min-w-fit h-svh bg-black border-r border-r-gray-700 p-8 gap-8 ${isProjectsSidebarOpen ? "left-0" : "-left-full"}`}
+      className={`flex flex-col items-start duration-300 transition-all lg:w-[15%] w-full absolute lg:relative lg:left-0 z-10 lg:min-w-fit h-svh bg-black lg:border-r lg:border-r-gray-800 p-8 gap-8 ${isProjectsSidebarOpen ? "left-0" : "-left-full"}`}
     >
       <ProjectsLogo />
       <div className="flex flex-col items-center justify-start w-full flex-1">
@@ -25,6 +20,9 @@ const ProjectsSidebar = () => {
           {paths.map((path, i) => {
             return (
               <ProjectsSidebarLink
+                onClick={() => {
+                  setIsProjectsSidebarOpen(false);
+                }}
                 selected={pathName == path.path}
                 key={i}
                 href={path.path}
