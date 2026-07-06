@@ -7,16 +7,26 @@ import {
 } from "react-icons/md";
 
 const ProjectsCurrentlyPlaying = () => {
-  const { setIsProjectsPlayerOpen } = useGlobals();
+  const { setIsProjectsPlayerOpen, projects } = useGlobals();
+  const p = projects.projects[1];
 
   return (
     <div
       onClick={() => {
         setIsProjectsPlayerOpen(true);
       }}
-      className="lg:scale-0 scale-100 absolute bottom-0 w-full p-6 bg-black border-t border-t-gray-700 flex flex-row items-center justify-evenly"
+      className="lg:scale-0 scale-100 absolute bottom-0 w-full p-4 bg-black border-t border-t-gray-700 flex flex-row items-center justify-evenly gap-4"
     >
-      <MdOutlineKeyboardArrowUp className="p-2 size-10" />
+      <img src={p.cover} alt="doh" className="w-16 rounded-xl" />
+      <div className="flex flex-col items-start flex-1">
+        <p className="text-xl font-bold">{p.name}</p>
+        <p className="text-white/80 underline text-[10px]">
+          {p.authors[0].name}
+        </p>
+      </div>
+      <div>
+        <MdOutlineKeyboardArrowUp className="size-6" />
+      </div>
     </div>
   );
 };
