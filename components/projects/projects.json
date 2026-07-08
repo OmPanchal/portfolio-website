@@ -37,6 +37,6 @@
   ],
   "albums": [
     { "name": "AI from scratch", "projects": ["bren", "Autodiff"] },
-    { "name": "AI from scratch Remastered", "projects": ["bren", "Autodiff"] }
+    { "name": "Featured Projects", "projects": ["bren", "Autodiff"] }
   ]
 }

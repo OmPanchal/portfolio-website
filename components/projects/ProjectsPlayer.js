@@ -8,17 +8,15 @@ import { IoMdSkipBackward, IoMdSkipForward } from "react-icons/io";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { PiShuffleAngularFill } from "react-icons/pi";
 import logo from "./logo/logo-yellow.png";
-import { FaLink } from "react-icons/fa6";
 import HorizontalScroll from "../HorizontalScroll";
-import Link from "next/link";
 import { projectsIcons } from "@/utils/constants";
 import ProjectsChip from "./ProjectsChip";
+import ProjectsAuthorList from "./ProjectsAuthorList";
 
 const ProjectsPlayer = () => {
   const {
     isProjectsPlayerOpen,
     setIsProjectsPlayerOpen,
-    projects,
     queueIdx,
     currentAlbum,
     currentProject,
@@ -73,21 +71,7 @@ const ProjectsPlayer = () => {
                 </div>
               </div>
               {/* AUTHORS */}
-              <HorizontalScroll className="flex flex-row items-center justify-start max-w-full min-h-max lg:gap-6 gap-4 overflow-x-auto no-scrollbar">
-                {currentProject.authors.map((author, idx) => {
-                  return (
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={author.link}
-                      key={idx}
-                      className="text-white/80 underline lg:text-xl text-xs min-w-max"
-                    >
-                      {author.name}
-                    </a>
-                  );
-                })}
-              </HorizontalScroll>
+              <ProjectsAuthorList project={currentProject} />
             </div>
             <HorizontalScroll className="flex flex-row items-center justify-start max-w-full min-h-max gap-4 mb-8 overflow-x-auto no-scrollbar">
               {/* LANGUAGES */}
