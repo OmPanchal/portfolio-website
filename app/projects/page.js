@@ -1,6 +1,7 @@
 import ProjectsCurrentlyPlaying from "@/components/projects/ProjectsCurrentlyPlaying";
 import ProjectsHeader from "@/components/projects/ProjectsHeader";
 import ProjectsPlayer from "@/components/projects/ProjectsPlayer";
+import ProjectsSelector from "@/components/projects/ProjectsSelector";
 import ProjectsSidebar from "@/components/projects/ProjectsSidebar";
 import React from "react";
 
@@ -11,6 +12,7 @@ const Projects = () => {
       <div className="flex flex-row items-center flex-1 h-svh">
         <div className="flex flex-col h-svh 2xl:w-[60%] w-full bg-black">
           <ProjectsHeader />
+          <ProjectsSelector />
         </div>
         <ProjectsPlayer />
         <ProjectsCurrentlyPlaying />

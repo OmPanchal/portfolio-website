@@ -22,7 +22,7 @@ export const GeneralProvider = ({ children }) => {
 
   const [projects, setProjects] = useState(actualProjectsArray);
 
-  const [currentAlbum, setCurrentAlbum] = useState();
+  const [currentAlbum, setCurrentAlbum] = useState(undefined);
   const [queue, setQueue] = useState([]);
   const [queueIdx, setQueueIdx] = useState(0);
 
@@ -30,13 +30,16 @@ export const GeneralProvider = ({ children }) => {
 
   useEffect(() => {
     if (actualAlbumsArray.length > 0) {
-      const randomIndex = Math.floor(Math.random() * actualAlbumsArray.length);
-      setCurrentAlbum(actualAlbumsArray[randomIndex]);
+      for (let i = 0; i < actualAlbumsArray.length; i++) {
+        if (actualAlbumsArray[i].name === "Featured Projects") {
+          setCurrentAlbum(actualAlbumsArray[i]);
+        }
+      }
     }
   }, []);
 
   useEffect(() => {
-    if (currentAlbum != undefined && currentAlbum.length != 0) {
+    if (currentAlbum != undefined && currentAlbum.length !== 0) {
       let tmp = [];
       for (let i = 0; i < currentAlbum.projects.length; i++) {
         tmp.push(getProject(currentAlbum.projects[i], projects));
