@@ -4,7 +4,11 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaGithub, FaPause, FaPlay } from "react-icons/fa";
-import { IoMdSkipBackward, IoMdSkipForward } from "react-icons/io";
+import {
+  IoMdInformation,
+  IoMdSkipBackward,
+  IoMdSkipForward,
+} from "react-icons/io";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { PiShuffleAngularFill } from "react-icons/pi";
 import logo from "./logo/logo-yellow.png";
@@ -12,6 +16,8 @@ import HorizontalScroll from "../HorizontalScroll";
 import { projectsIcons } from "@/utils/constants";
 import ProjectsChip from "./ProjectsChip";
 import ProjectsAuthorList from "./ProjectsAuthorList";
+import { HiOutlineQueueList } from "react-icons/hi2";
+import { LuInfo } from "react-icons/lu";
 
 const ProjectsPlayer = () => {
   const {
@@ -22,12 +28,16 @@ const ProjectsPlayer = () => {
     currentProject,
     queue,
     setQueueIdx,
+    isQueueTabOpen,
+    setIsQueueTabOpen,
+    isInformationTabOpen,
+    setIsInformationTabOpen,
   } = useGlobals();
   const [isPlaying, setIsPlaying] = useState(true);
 
   return (
     <div
-      className={`lg:relative fixed lg:h-svh lg:w-[40%] w-full h-full bg-black lg:border-l lg:border-l-gray-800 z-10 duration-300 transition-all ${isProjectsPlayerOpen ? "bottom-0" : "lg:bottom-0 -bottom-full"} flex flex-col items-center justify-evenly overflow-auto no-scrollbar`}
+      className={`lg:relative fixed lg:h-svh lg:w-[40%] w-full h-full bg-black lg:border-l lg:border-l-gray-800 z-10 duration-300 transition-all ${isProjectsPlayerOpen ? "bottom-0" : "lg:bottom-0 -bottom-full"} flex flex-col items-center justify-evenly overflow-hidden no-scrollbar`}
     >
       {currentProject == null ? (
         <div>Nothing is playing yet</div>
@@ -41,8 +51,9 @@ const ProjectsPlayer = () => {
               }}
             />
           </div>
+
           {/* Main "player"*/}
-          <div className="flex flex-col w-full flex-1 bg-black lg:px-24 p-8 lg:gap-14 gap-6">
+          <div className="flex flex-col w-full flex-1 bg-black lg:px-24 p-8 py-0 lg:gap-14 gap-6">
             <p className="lg:text-xl font-thin lg:px-6 px-4 lg:py-4 py-2 text-center ">
               {/* TODO: Possibly allow for playlists as well*/}
               Playing from <a className="font-normal">{currentAlbum.name}</a>
@@ -54,6 +65,7 @@ const ProjectsPlayer = () => {
                 <p className="lg:text-6xl text-3xl font-bold">
                   {currentProject.name}
                 </p>
+
                 {/* WEBSITES */}
                 <div className="flex flex-row items-center lg:gap-6 gap-3 ">
                   {currentProject.links.map((link, idx) => {
@@ -70,10 +82,11 @@ const ProjectsPlayer = () => {
                   })}
                 </div>
               </div>
+
               {/* AUTHORS */}
               <ProjectsAuthorList project={currentProject} />
             </div>
-            <HorizontalScroll className="flex flex-row items-center justify-start max-w-full min-h-max gap-4 mb-8 overflow-x-auto no-scrollbar">
+            <HorizontalScroll className="flex flex-row items-center justify-start max-w-full min-h-max gap-4 mb-2 -mt-2 overflow-x-auto no-scrollbar">
               {/* LANGUAGES */}
               {currentProject.languages.map((language, idx) => {
                 return (
@@ -82,6 +95,7 @@ const ProjectsPlayer = () => {
                   </ProjectsChip>
                 );
               })}
+
               {/* TAGS */}
               {currentProject.tags.map((tag, idx) => {
                 return (
@@ -91,12 +105,15 @@ const ProjectsPlayer = () => {
                 );
               })}
             </HorizontalScroll>
+
             {/* SLIDER */}
             <div className="w-full p-1 rounded-full bg-white/20"></div>
+
             {/* PLAYER BUTTONS */}
             <div className="flex flex-row items-center justify-evenly">
               {/* SHUFFLE*/}
               <PiShuffleAngularFill className="lg:size-12 size-6 cursor-pointer transition-all hover:animate-spin" />
+
               {/* PREVIOUS */}
               <button
                 className="transition-all bg-white/10 lg:p-6 p-3 rounded-full cursor-pointer relative hover:bg-white/20 disabled:cursor-default disabled:hover:bg-white/10 group"
@@ -107,6 +124,7 @@ const ProjectsPlayer = () => {
               >
                 <IoMdSkipBackward className="lg:size-12 size-6 text-white/80 group-disabled:text-white/40" />
               </button>
+
               {/* PLAY/PAUSE*/}
               {isPlaying ? (
                 <Image
@@ -127,6 +145,7 @@ const ProjectsPlayer = () => {
                   <FaPlay className="lg:size-12 size-8" />
                 </button>
               )}
+
               {/* SKIP*/}
               <button
                 className="transition-all bg-white/10 lg:p-6 p-3 rounded-full cursor-pointer relative hover:bg-white/20 disabled:cursor-default disabled:hover:bg-white/10 group"
@@ -137,12 +156,67 @@ const ProjectsPlayer = () => {
               >
                 <IoMdSkipForward className="lg:size-12 size-6 text-white/80 group-disabled:text-white/40" />
               </button>
+
               {/* LIKE */}
               <AiOutlineLike className="lg:size-12 size-6 cursor-pointer transition-all hover:-mt-2" />
+            </div>
+            <div className="flex flex-row items-center justify-center w-full mt-2">
+              <div className="rounded-full flex flex-row items-center justify-evenly gap-12 bg-white/10 lg:w-[90%] w-full">
+                {/* QUEUE*/}
+                <div
+                  onClick={() => {
+                    setIsQueueTabOpen(true);
+                  }}
+                  className="lg:p-4 p-3 rounded-l-full lg:gap-4 gap-2 flex flex-1 items-center h-full justify-center cursor-pointer hover:bg-white/10"
+                >
+                  <HiOutlineQueueList className="lg:size-10 size-6" />
+                  <p className="lg:text-2xl">Queue</p>
+                </div>
+
+                {/* ABOUT */}
+                <div
+                  onClick={() => {
+                    setIsInformationTabOpen(true);
+                  }}
+                  className="lg:p-4 p-3 rounded-r-full lg:gap-4 gap-2 flex flex-1 items-center h-full justify-center cursor-pointer hover:bg-white/10"
+                >
+                  <LuInfo className="lg:size-10 size-6" />
+                  <p className="lg:text-2xl">About</p>
+                </div>
+              </div>
             </div>
           </div>
         </>
       )}
+      {/* QUEUE CONTENTS*/}
+      <div
+        className={`absolute bg-black z-20 w-full h-full transition-all ${isQueueTabOpen ? "bottom-0" : "-bottom-full"}`}
+      >
+        {queue.map((project, idx) => {
+          return <p key={idx}>{project.name}</p>;
+        })}
+        <button
+          onClick={() => {
+            setIsQueueTabOpen(false);
+          }}
+        >
+          CLOSE
+        </button>
+      </div>
+
+      {/* ABOUT*/}
+      <div
+        className={`absolute bg-black lg:text-2xl text-xs font-light p-10 z-20 w-full h-full transition-all ${isInformationTabOpen ? "bottom-0" : "-bottom-full"}`}
+      >
+        {currentProject.description}
+        <button
+          onClick={() => {
+            setIsInformationTabOpen(false);
+          }}
+        >
+          CLOSE
+        </button>
+      </div>
     </div>
   );
 };
