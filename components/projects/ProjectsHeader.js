@@ -18,7 +18,7 @@ const ProjectsHeader = () => {
       <input
         type="text"
         placeholder="Search Project"
-        className="bg-white/20 lg:p-6 p-4 lg:text-2xl text-sm outline-none rounded-2xl lg:w-[60%] w-full"
+        className="bg-white/20 lg:p-6 p-4 lg:text-2xl text-sm outline-none rounded-2xl lg:w-[65%] w-full"
       />
     </div>
   );
