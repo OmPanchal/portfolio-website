@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { AiOutlineLike } from "react-icons/ai";
 import { FaGithub, FaPause, FaPlay } from "react-icons/fa";
 import {
+  IoMdClose,
   IoMdInformation,
   IoMdSkipBackward,
   IoMdSkipForward,
@@ -18,6 +19,8 @@ import ProjectsChip from "./ProjectsChip";
 import ProjectsAuthorList from "./ProjectsAuthorList";
 import { HiOutlineQueueList } from "react-icons/hi2";
 import { LuInfo } from "react-icons/lu";
+import ProjectsPlayerTab from "./ProjectsPlayerTab";
+import ProjectsQueue from "./ProjectsQueue";
 
 const ProjectsPlayer = () => {
   const {
@@ -25,7 +28,6 @@ const ProjectsPlayer = () => {
     setIsProjectsPlayerOpen,
     queueIdx,
     currentAlbum,
-    currentProject,
     queue,
     setQueueIdx,
     isQueueTabOpen,
@@ -37,9 +39,9 @@ const ProjectsPlayer = () => {
 
   return (
     <div
-      className={`lg:relative fixed lg:h-svh lg:w-[40%] w-full h-full bg-black lg:border-l lg:border-l-gray-800 z-10 duration-300 transition-all ${isProjectsPlayerOpen ? "bottom-0" : "lg:bottom-0 -bottom-full"} flex flex-col items-center justify-evenly overflow-hidden no-scrollbar`}
+      className={`lg:relative fixed lg:h-svh lg:w-[40%] w-full h-full bg-black lg:border-l lg:border-l-gray-800 z-10 duration-300 transition-all ${isProjectsPlayerOpen ? "bottom-0" : "lg:bottom-0 -bottom-full"} flex flex-col items-center justify-evenly overflow-hidden  no-scrollbar`}
     >
-      {currentProject == null ? (
+      {queue[queueIdx] == null ? (
         <div>Nothing is playing yet</div>
       ) : (
         <>
@@ -58,17 +60,21 @@ const ProjectsPlayer = () => {
               {/* TODO: Possibly allow for playlists as well*/}
               Playing from <a className="font-normal">{currentAlbum.name}</a>
             </p>
-            <img src={currentProject.cover} alt="doh" className="rounded-4xl" />
+            <img
+              src={queue[queueIdx].cover}
+              alt="doh"
+              className="rounded-4xl"
+            />
             <div className="flex flex-col items-start justify-around gap-2 ">
               <div className="flex flex-row items-center justify-between w-full">
                 {/* NAME */}
                 <p className="lg:text-6xl text-3xl font-bold">
-                  {currentProject.name}
+                  {queue[queueIdx].name}
                 </p>
 
                 {/* WEBSITES */}
                 <div className="flex flex-row items-center lg:gap-6 gap-3 ">
-                  {currentProject.links.map((link, idx) => {
+                  {queue[queueIdx].links.map((link, idx) => {
                     return (
                       <a
                         target="_blank"
@@ -84,11 +90,11 @@ const ProjectsPlayer = () => {
               </div>
 
               {/* AUTHORS */}
-              <ProjectsAuthorList project={currentProject} />
+              <ProjectsAuthorList project={queue[queueIdx]} />
             </div>
             <HorizontalScroll className="flex flex-row items-center justify-start max-w-full min-h-max gap-4 mb-2 -mt-2 overflow-x-auto no-scrollbar">
               {/* LANGUAGES */}
-              {currentProject.languages.map((language, idx) => {
+              {queue[queueIdx].languages.map((language, idx) => {
                 return (
                   <ProjectsChip colour="green" key={idx}>
                     {language}
@@ -97,7 +103,7 @@ const ProjectsPlayer = () => {
               })}
 
               {/* TAGS */}
-              {currentProject.tags.map((tag, idx) => {
+              {queue[queueIdx].tags.map((tag, idx) => {
                 return (
                   <ProjectsChip colour="white" key={idx}>
                     {tag}
@@ -189,34 +195,24 @@ const ProjectsPlayer = () => {
         </>
       )}
       {/* QUEUE CONTENTS*/}
-      <div
-        className={`absolute bg-black z-20 w-full h-full transition-all ${isQueueTabOpen ? "bottom-0" : "-bottom-full"}`}
+      <ProjectsPlayerTab
+        headerTitle={currentAlbum.name}
+        state={isQueueTabOpen}
+        setState={setIsQueueTabOpen}
       >
-        {queue.map((project, idx) => {
-          return <p key={idx}>{project.name}</p>;
-        })}
-        <button
-          onClick={() => {
-            setIsQueueTabOpen(false);
-          }}
-        >
-          CLOSE
-        </button>
-      </div>
+        <ProjectsQueue />
+      </ProjectsPlayerTab>
 
       {/* ABOUT*/}
-      <div
-        className={`absolute bg-black lg:text-2xl text-xs font-light p-10 z-20 w-full h-full transition-all ${isInformationTabOpen ? "bottom-0" : "-bottom-full"}`}
+      <ProjectsPlayerTab
+        headerTitle="About"
+        state={isInformationTabOpen}
+        setState={setIsInformationTabOpen}
       >
-        {currentProject.description}
-        <button
-          onClick={() => {
-            setIsInformationTabOpen(false);
-          }}
-        >
-          CLOSE
-        </button>
-      </div>
+        <div className="font-extralight lg:text-2xl text-sm">
+          {queue[queueIdx].description}
+        </div>
+      </ProjectsPlayerTab>
     </div>
   );
 };
