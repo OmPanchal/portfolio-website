@@ -7,10 +7,10 @@ import React from "react";
 
 const Projects = () => {
   return (
-    <div className="flex flex-row flex-1 items-center bg-black h-full font-[Unbound] select-none">
+    <div className="flex flex-row flex-1 items-center bg-black h-full font-[Unbound] select-none relative">
       <ProjectsSidebar />
-      <div className="flex flex-row items-center flex-1 h-svh">
-        <div className="flex flex-col h-svh 2xl:w-[60%] w-full bg-black">
+      <div className="flex relative flex-row items-center h-svh flex-1 min-w-0">
+        <div className="flex flex-col h-svh bg-black/20 flex-1 min-w-0 ">
           <ProjectsHeader />
           <ProjectsSelector />
         </div>
