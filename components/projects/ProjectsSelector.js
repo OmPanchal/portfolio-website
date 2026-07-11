@@ -25,7 +25,7 @@ const ProjectsSelector = () => {
                 }}
               >
                 {currentProject === project ? (
-                  <div className="absolute top-0 left-0 lg:w-84 w-32 lg:h-84 h-32 flex flex-row items-center justify-center bg-black/30">
+                  <div className="absolute top-0 lg:mt-2 mt-1.5 left-0 lg:w-84 w-32 lg:h-84 h-32 flex flex-row items-center justify-center bg-black/30">
                     <Image
                       src={logo}
                       alt="playing"
@@ -33,7 +33,7 @@ const ProjectsSelector = () => {
                     />
                   </div>
                 ) : (
-                  <div className="absolute top-0 left-0 lg:w-84 w-32 lg:h-84 h-32 bg-black/30 opacity-0 group-hover:opacity-100 transition-all flex flex-row items-center justify-center">
+                  <div className="absolute top-0 left-0 lg:w-84 w-32 lg:h-84 h-32 bg-black/30 opacity-0 group-hover:opacity-100 transition-all flex flex-row items-center justify-center lg:mt-2 mt-1.5">
                     <FaPlay className="size-12 text-white/80" />
                   </div>
                 )}
@@ -52,7 +52,7 @@ const ProjectsSelector = () => {
           })}
         </HorizontalScroll>
       </div>
-      <div className="lg:p-12 p-6 flex w-full flex-col lg:gap-8 gap-4 relative">
+      {/* <div className="lg:p-12 p-6 flex w-full flex-col lg:gap-8 gap-4 relative">
         <p className="lg:text-4xl text-xl font-bold">Alumbs</p>
         <HorizontalScroll className="flex flex-row max-w-full overflow-x-auto lg:gap-8 gap-4 no-scrollbar">
           {projects.map((project, idx) => {
@@ -91,7 +91,7 @@ const ProjectsSelector = () => {
             );
           })}
         </HorizontalScroll>
-      </div>
+      </div>*/}
     </div>
   );
 };
