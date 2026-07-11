@@ -79,6 +79,24 @@
       "description": "This is my portfolio website!!!",
       "album": "Webdev",
       "tags": ["NextJS", "Tailwindcss", "Web Development", "ReactJS"]
+    },
+    {
+      "name": "Lenet Using Tensorflow",
+      "authors": [
+        { "name": "Om Panchal", "link": "https://github.com/OmPanchal" }
+      ],
+      "cover": "/covers/colab.png",
+      "released": "14/10/2023",
+      "links": [
+        {
+          "type": "github",
+          "link": "https://github.com/OmPanchal/lenet-using-tensorflow"
+        }
+      ],
+      "languages": ["python"],
+      "description": "A custom implementation and training of lenet5 using tensorflow, trained on a padded mnist dataeset.",
+      "album": "Classical CNN",
+      "tags": ["Tensorflow", "CNNs", "Keras"]
     }
   ],
   "albums": [
