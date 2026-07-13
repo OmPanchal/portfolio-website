@@ -65,7 +65,7 @@
       "tags": ["NextJS", "Tailwindcss", "Web Development", "ReactJS"]
     },
     {
-      "name": "Porfolio Website",
+      "name": "Portfolio Website",
       "authors": [
         { "name": "Om Panchal", "link": "https://github.com/OmPanchal" }
       ],
@@ -94,17 +94,92 @@
         }
       ],
       "languages": ["python"],
-      "description": "A custom implementation and training of lenet5 using tensorflow, trained on a padded mnist dataeset.",
-      "album": "Classical CNN",
+      "description": "A custom implementation and training of lenet5 using tensorflow, trained on a padded mnist dataset.",
+      "album": "Classic CNNs",
+      "tags": ["Tensorflow", "CNNs", "Keras"]
+    },
+    {
+      "name": "AlexNet Using Tensorflow",
+      "authors": [
+        { "name": "Om Panchal", "link": "https://github.com/OmPanchal" }
+      ],
+      "cover": "/covers/colab.png",
+      "released": "20/12/2023",
+      "links": [
+        {
+          "type": "github",
+          "link": "https://github.com/OmPanchal/AlexNet-using-tensorflow"
+        }
+      ],
+      "languages": ["python"],
+      "description": "A tensorflow implementation of the AlexNet architecture trained on the tiny imagenet dataset",
+      "album": "Classic CNNs",
+      "tags": ["Tensorflow", "CNNs", "Keras"]
+    },
+    {
+      "name": "GoogleNet Using Tensorflow",
+      "authors": [
+        { "name": "Om Panchal", "link": "https://github.com/OmPanchal" }
+      ],
+      "cover": "/covers/colab.png",
+      "released": "19/06/2024",
+      "links": [
+        {
+          "type": "github",
+          "link": "https://github.com/OmPanchal/GoogLeNet-using-tensorflow"
+        }
+      ],
+      "languages": ["python"],
+      "description": "An implementation of the GoogLeNet architecture from scratch in tensorflow as well as transfer learning of the Inceptionv3 architecture.",
+      "album": "Classic CNNs",
       "tags": ["Tensorflow", "CNNs", "Keras"]
     }
   ],
   "albums": [
     {
       "name": "Featured Projects",
-      "projects": ["bren", "Autodiff", "Portfolio Website", "QuickSand", "typo"]
+      "projects": [
+        "bren",
+        "Autodiff",
+        "Portfolio Website",
+        "QuickSand",
+        "typo",
+        "Lenet Using Tensorflow",
+        "AlexNet Using Tensorflow",
+        "GoogleNet Using Tensorflow"
+      ],
+      "cover": "/",
+      "authors": [
+        { "name": "Om Panchal", "link": "https://github.com/OmPanchal" }
+      ]
     },
-    { "name": "AI from scratch", "projects": ["bren", "Autodiff"] },
-    { "name": "Webdev", "projects": ["Portfolio Website", "QuickSand", "typo"] }
+    {
+      "name": "AI from scratch",
+      "projects": ["bren", "Autodiff"],
+      "cover": "/covers/AIFromScratch.png",
+      "authors": [
+        { "name": "Om Panchal", "link": "https://github.com/OmPanchal" }
+      ]
+    },
+    {
+      "name": "Webdev",
+      "projects": ["Portfolio Website", "QuickSand", "typo"],
+      "cover": "/covers/WebDev.png",
+      "authors": [
+        { "name": "Om Panchal", "link": "https://github.com/OmPanchal" }
+      ]
+    },
+    {
+      "name": "Classic CNNs",
+      "projects": [
+        "Lenet Using Tensorflow",
+        "AlexNet Using Tensorflow",
+        "GoogleNet Using Tensorflow"
+      ],
+      "cover": "/covers/colab.png",
+      "authors": [
+        { "name": "Om Panchal", "link": "https://github.com/OmPanchal" }
+      ]
+    }
   ]
 }
