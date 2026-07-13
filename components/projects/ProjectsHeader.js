@@ -1,6 +1,7 @@
 "use client";
 import { useGlobals } from "@/context/GeneralContext";
 import { IoMdMenu } from "react-icons/io";
+import ProjectsSearchBar from "./ProjectsSearchBar";
 
 const ProjectsHeader = () => {
   const { isProjectsSidebarOpen, setIsProjectsSidebarOpen } = useGlobals();
@@ -15,11 +16,7 @@ const ProjectsHeader = () => {
       >
         <IoMdMenu className="p-3 size-12 border-gray-700 mr-2 border rounded-full" />
       </button>
-      <input
-        type="text"
-        placeholder="Search Project"
-        className="bg-white/20 lg:p-6 p-4 lg:text-2xl text-sm outline-none rounded-2xl lg:w-[65%] w-full"
-      />
+      <ProjectsSearchBar />
     </div>
   );
 };
