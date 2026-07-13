@@ -28,6 +28,7 @@ const ProjectsPlayer = () => {
     setIsProjectsPlayerOpen,
     queueIdx,
     currentAlbum,
+    currentProject,
     queue,
     setQueueIdx,
     isQueueTabOpen,
@@ -55,13 +56,13 @@ const ProjectsPlayer = () => {
           </div>
 
           {/* Main "player"*/}
-          <div className="flex flex-col w-full flex-1 bg-black lg:px-24 p-8 py-0 lg:gap-14 gap-6">
+          <div className="flex flex-col w-full flex-1 bg-black lg:px-24 p-8 py-0 lg:gap-14 gap-6 mt-12">
             <p className="lg:text-xl font-thin lg:px-6 px-4 lg:py-4 py-2 text-center ">
               {/* TODO: Possibly allow for playlists as well*/}
               Playing from <a className="font-normal">{currentAlbum.name}</a>
             </p>
             <img
-              src={queue[queueIdx].cover}
+              src={queue[queueIdx]?.cover}
               alt="doh"
               className="rounded-4xl"
             />
@@ -69,12 +70,12 @@ const ProjectsPlayer = () => {
               <div className="flex flex-row items-center justify-between w-full">
                 {/* NAME */}
                 <p className="lg:text-6xl text-3xl font-bold">
-                  {queue[queueIdx].name}
+                  {queue[queueIdx]?.name}
                 </p>
 
                 {/* WEBSITES */}
                 <div className="flex flex-row items-center lg:gap-6 gap-3 ">
-                  {queue[queueIdx].links.map((link, idx) => {
+                  {queue[queueIdx]?.links.map((link, idx) => {
                     return (
                       <a
                         target="_blank"
@@ -94,7 +95,7 @@ const ProjectsPlayer = () => {
             </div>
             <HorizontalScroll className="flex flex-row items-center justify-start max-w-full min-h-max gap-4 mb-2 -mt-2 overflow-x-auto no-scrollbar">
               {/* LANGUAGES */}
-              {queue[queueIdx].languages.map((language, idx) => {
+              {queue[queueIdx]?.languages.map((language, idx) => {
                 return (
                   <ProjectsChip colour="green" key={idx}>
                     {language}
@@ -103,7 +104,7 @@ const ProjectsPlayer = () => {
               })}
 
               {/* TAGS */}
-              {queue[queueIdx].tags.map((tag, idx) => {
+              {queue[queueIdx]?.tags.map((tag, idx) => {
                 return (
                   <ProjectsChip colour="white" key={idx}>
                     {tag}
@@ -117,8 +118,13 @@ const ProjectsPlayer = () => {
 
             {/* PLAYER BUTTONS */}
             <div className="flex flex-row items-center justify-evenly">
-              {/* SHUFFLE*/}
-              <PiShuffleAngularFill className="lg:size-12 size-6 cursor-pointer transition-all hover:animate-spin" />
+              {/* ABOUT*/}
+              <LuInfo
+                onClick={() => {
+                  setIsInformationTabOpen(true);
+                }}
+                className="lg:size-12 size-6 cursor-pointer transition-all hover:-mt-2"
+              />
 
               {/* PREVIOUS */}
               <button
@@ -163,33 +169,13 @@ const ProjectsPlayer = () => {
                 <IoMdSkipForward className="lg:size-12 size-6 text-white/80 group-disabled:text-white/40" />
               </button>
 
-              {/* LIKE */}
-              <AiOutlineLike className="lg:size-12 size-6 cursor-pointer transition-all hover:-mt-2" />
-            </div>
-            <div className="flex flex-row items-center justify-center w-full mt-2">
-              <div className="rounded-full flex flex-row items-center justify-evenly gap-12 bg-white/10 lg:w-[90%] w-full">
-                {/* QUEUE*/}
-                <div
-                  onClick={() => {
-                    setIsQueueTabOpen(true);
-                  }}
-                  className="lg:p-4 p-3 rounded-l-full lg:gap-4 gap-2 flex flex-1 items-center h-full justify-center cursor-pointer hover:bg-white/10"
-                >
-                  <HiOutlineQueueList className="lg:size-10 size-6" />
-                  <p className="lg:text-2xl">Queue</p>
-                </div>
-
-                {/* ABOUT */}
-                <div
-                  onClick={() => {
-                    setIsInformationTabOpen(true);
-                  }}
-                  className="lg:p-4 p-3 rounded-r-full lg:gap-4 gap-2 flex flex-1 items-center h-full justify-center cursor-pointer hover:bg-white/10"
-                >
-                  <LuInfo className="lg:size-10 size-6" />
-                  <p className="lg:text-2xl">About</p>
-                </div>
-              </div>
+              {/* QUEUE */}
+              <HiOutlineQueueList
+                onClick={() => {
+                  setIsQueueTabOpen(true);
+                }}
+                className="lg:size-12 size-6 cursor-pointer transition-all hover:-mt-2"
+              />
             </div>
           </div>
         </>
@@ -210,7 +196,7 @@ const ProjectsPlayer = () => {
         setState={setIsInformationTabOpen}
       >
         <div className="font-extralight lg:text-2xl text-sm">
-          {queue[queueIdx].description}
+          {queue[queueIdx]?.description}
         </div>
       </ProjectsPlayerTab>
     </div>
