@@ -4,39 +4,26 @@ import HorizontalScroll from "../HorizontalScroll";
 import { FaPlay } from "react-icons/fa";
 import logo from "./logo/logo-yellow.png";
 import Image from "next/image";
+import ProjectsAuthorList from "./ProjectsAuthorList";
 
 const ProjectsQueue = () => {
   const { queue, setQueue, queueIdx, setQueueIdx, currentAlbum } = useGlobals();
 
   return (
-    <div className="flex flex-col items-center justify-start lg:gap-4 gap-2">
+    <div className="flex flex-col items-center justify-start">
       {queue.map((project, idx) => {
         return (
           <div
-            className={`flex flex-row items-center ${queue[queueIdx] === project ? "bg-white/20" : "bg-white/15"} w-full lg:p-3 p-2 gap-4 rounded-2xl cursor-pointer hover:bg-white/20 transition-all`}
+            className={`flex flex-row items-center ${queue[queueIdx] === project ? "bg-white/15 rounded-2xl" : ""} w-full lg:p-3 p-2 cursor-pointer hover:bg-white/15 hover:rounded-2xl transition-all gap-4`}
             key={idx}
             onClick={() => {
               setQueueIdx(idx);
             }}
           >
-            <img src={project.cover} className="lg:w-20 w-12 rounded-2xl" />
+            <img src={project?.cover} className="lg:w-20 w-12 rounded-2xl" />
             <div className="w-full">
-              <p className="lg:text-2xl font-bold">{project.name}</p>
-              <HorizontalScroll>
-                {project.authors.map((author, idx) => {
-                  return (
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href={author.link}
-                      key={idx}
-                      className="underline lg:text-base text-xs"
-                    >
-                      {author.name}
-                    </a>
-                  );
-                })}
-              </HorizontalScroll>
+              <p className="lg:text-2xl font-bold">{project?.name}</p>
+              <ProjectsAuthorList project={project} />
             </div>
             <div className="w-fit px-2">
               {queue[queueIdx] === project ? (
