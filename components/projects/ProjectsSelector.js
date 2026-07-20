@@ -65,7 +65,7 @@ const ProjectsSelector = () => {
         </HorizontalScroll>
       </div>
       <div className="lg:p-12 p-6 flex w-full flex-col lg:gap-8 gap-4 relative">
-        <p className="lg:text-4xl text-xl font-bold">Alumbs</p>
+        <p className="lg:text-4xl text-xl font-bold">Albums</p>
         <HorizontalScroll className="flex flex-row max-w-full overflow-x-auto lg:gap-8 gap-4 no-scrollbar">
           {albums.slice(1, albums.length).map((album, idx) => {
             return (
