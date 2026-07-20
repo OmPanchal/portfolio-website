@@ -46,6 +46,13 @@ body::-webkit-scrollbar {
   src: url(../fonts/Unbounded/Unbounded-VariableFont_wght.ttf);
 }
 
+@font-face {
+  font-family: "HyperSpace";
+  src: url("../fonts/HyperSpace/Hyperspace.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
