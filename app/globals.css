@@ -53,6 +53,18 @@ body::-webkit-scrollbar {
   font-style: normal;
 }
 
+@keyframes flash {
+  0% {
+    color: white;
+  }
+  50% {
+    color: transparent;
+  }
+  100% {
+    color: white;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
