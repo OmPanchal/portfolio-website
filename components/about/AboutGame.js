@@ -1,5 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
+import AboutLogo from "./AboutLogo";
+import AboutSidebar from "./AboutSidebar";
 
 const AboutGame = () => {
   let WIDTH = 0;
@@ -17,15 +19,20 @@ const AboutGame = () => {
       on: "#fcba03",
       off: "white",
     },
+    purple: {
+      on: "#ad07fa",
+      off: "#d07ff5",
+    },
   };
   const THRUST = 0.3;
   const FRICTION = 0.985;
   const ROTATION_SPEED = 0.075;
-  const FIRE_RATE = 15;
+  let FIRE_RATE = 15;
   const POWER_UPS = [
-    { type: "I", colour: COLOURS.blue, duration: 360 },
-    { type: "R", colour: COLOURS.red, duration: 240 },
-    { type: "T", colour: COLOURS.yellow, duration: 240 },
+    { type: "I", colour: COLOURS.blue, duration: 480 },
+    { type: "R", colour: COLOURS.red, duration: 360 },
+    { type: "T", colour: COLOURS.yellow, duration: 480 },
+    { type: "M", colour: COLOURS.purple, duration: 300 },
   ];
   const DEFAULT_GAME_STATE = {
     score: 0,
@@ -42,7 +49,7 @@ const AboutGame = () => {
   });
   const shootingRef = useRef({ cooldown: 0 });
   const statsRef = useRef(DEFAULT_GAME_STATE);
-  const [isGamePlaying, setIsGamePlaying] = useState(true);
+  const [isGamePlaying, setIsGamePlaying] = useState(false);
   const [resetKey, setResetKey] = useState(0);
 
   function wrapPosition(object) {
@@ -280,6 +287,7 @@ const AboutGame = () => {
       if (e.code === "KeyA") keysRef.current.left = true;
       if (e.code === "KeyD") keysRef.current.right = true;
       if (e.code === "Space") keysRef.current.space = true;
+      if (e.code === "KeyQ") setIsGamePlaying(false);
     };
     const handleKeyUp = (e) => {
       if (e.code === "KeyW") keysRef.current.up = false;
@@ -297,154 +305,163 @@ const AboutGame = () => {
   }, []);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    canvas.width = WIDTH;
-    canvas.height = HEIGHT;
+    if (isGamePlaying) {
+      const canvas = canvasRef.current;
+      canvas.width = WIDTH;
+      canvas.height = HEIGHT;
 
-    let isPlaying = true;
+      let isPlaying = true;
 
-    const ctx = canvas.getContext("2d");
-    let ship = createShip();
+      const ctx = canvas.getContext("2d");
+      let ship = createShip();
 
-    let asteroids = [];
-    for (let i = 0; i < statsRef.current.wave + 3; i++) {
-      asteroids.push(spawnAsteroid());
-    }
-
-    let bullets = [];
-    let powerUpOrb = undefined;
-
-    let animationId;
-
-    const gameloop = () => {
-      if (!isPlaying) return;
-      ctx.clearRect(0, 0, WIDTH, HEIGHT);
-      ctx.fillStyle = "black";
-      ctx.fillRect(0, 0, WIDTH, HEIGHT);
-
-      updateShip(ship, keysRef.current);
-      wrapPosition(ship);
-      drawShip(ctx, ship);
-
-      handleShooting(ship, keysRef.current, shootingRef.current, bullets);
-
-      bullets.forEach((bullet) => {
-        updateBullet(bullet);
-        drawBullet(ctx, bullet);
-      });
-
-      bullets = bullets.filter((b) => b.life > 0);
-
-      asteroids.forEach((asteroid) => {
-        updateAsteroid(asteroid);
-        drawAsteroid(ctx, asteroid);
-      });
-
-      asteroids = asteroids.filter((a) => a.radius > 0);
-
-      asteroids.forEach((asteroid) => {
-        bullets.forEach((bullet) => {
-          if (isColliding(bullet, asteroid)) {
-            bullet.life = 0;
-            if (asteroid.radius === 160) {
-              statsRef.current.score += 20;
-            } else if (asteroid.radius === 80) {
-              statsRef.current.score += 50;
-            } else if (asteroid.radius === 40) {
-              statsRef.current.score += 100;
-
-              let flip = Math.random();
-              if (flip < 1) {
-                powerUpOrb = createPowerUp(asteroid.x, asteroid.y);
-              }
-            }
-            splitAsteroid(asteroid, asteroids);
-            asteroid.radius = 0;
-          }
-        });
-      });
-
-      if (
-        !ship.charged ||
-        (ship.charged && ship.charged.type !== "I") ||
-        ship.powerUpLife <= 0
-      ) {
-        asteroids.forEach((asteroid) => {
-          if (isColliding(ship, asteroid)) {
-            if (ship.charged && ship.charged.type === "R") {
-              splitAsteroid(asteroid, asteroids);
-              asteroid.radius = 0;
-            } else {
-              statsRef.current.lives -= 1;
-              if (statsRef.current.lives < 0) {
-                setIsGamePlaying(false);
-                isPlaying = false;
-                return;
-              }
-              splitAsteroid(asteroid, asteroids);
-              asteroid.radius = 0;
-              statsRef.current;
-              ship = createShip();
-            }
-          }
-        });
+      let asteroids = [];
+      for (let i = 0; i < statsRef.current.wave + 3; i++) {
+        asteroids.push(spawnAsteroid());
       }
 
-      if (asteroids.length === 0) {
-        statsRef.current.score += 100 * statsRef.current.wave;
-        statsRef.current.wave += 1;
-        ship = createShip();
-        for (let i = 0; i < statsRef.current.wave + 3; i++) {
-          asteroids.push(spawnAsteroid());
-        }
-      }
+      let bullets = [];
+      let powerUpOrb = undefined;
 
-      if (powerUpOrb) {
-        if (powerUpOrb.life <= 0) {
-          powerUpOrb = undefined;
+      let animationId;
+
+      const gameloop = () => {
+        if (!isPlaying) return;
+
+        if (ship.charged && ship.charged.type === "M") {
+          FIRE_RATE = 1;
         } else {
-          let pu = powerUpOrb;
-          powerUpOrb.life -= 1;
+          FIRE_RATE = Math.max(8, 15 - statsRef.current.wave);
+        }
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
-          drawPowerUp(ctx, pu);
-          if (isColliding(pu, ship)) {
-            for (let i = 0; i < POWER_UPS.length; i++) {
-              if (POWER_UPS[i] === pu.spec) {
-                ship = {
-                  ...ship,
-                  charged: POWER_UPS[i],
-                  powerUpLife: POWER_UPS[i].duration,
-                };
+        updateShip(ship, keysRef.current);
+        wrapPosition(ship);
+        drawShip(ctx, ship);
+
+        handleShooting(ship, keysRef.current, shootingRef.current, bullets);
+
+        bullets.forEach((bullet) => {
+          updateBullet(bullet);
+          drawBullet(ctx, bullet);
+        });
+
+        bullets = bullets.filter((b) => b.life > 0);
+
+        asteroids.forEach((asteroid) => {
+          updateAsteroid(asteroid);
+          drawAsteroid(ctx, asteroid);
+        });
+
+        asteroids = asteroids.filter((a) => a.radius > 0);
+
+        asteroids.forEach((asteroid) => {
+          bullets.forEach((bullet) => {
+            if (isColliding(bullet, asteroid)) {
+              bullet.life = 0;
+              if (asteroid.radius === 160) {
+                statsRef.current.score += 20;
+              } else if (asteroid.radius === 80) {
+                statsRef.current.score += 50;
+              } else if (asteroid.radius === 40) {
+                statsRef.current.score += 100;
+
+                let flip = Math.random();
+                if (flip < 0.2) {
+                  powerUpOrb = createPowerUp(asteroid.x, asteroid.y);
+                }
+              }
+              splitAsteroid(asteroid, asteroids);
+              asteroid.radius = 0;
+            }
+          });
+        });
+
+        if (
+          !ship.charged ||
+          (ship.charged && ship.charged.type !== "I") ||
+          ship.powerUpLife <= 0
+        ) {
+          asteroids.forEach((asteroid) => {
+            if (isColliding(ship, asteroid)) {
+              if (ship.charged && ship.charged.type === "R") {
+                splitAsteroid(asteroid, asteroids);
+                asteroid.radius = 0;
+              } else {
+                statsRef.current.lives -= 1;
+                if (statsRef.current.lives < 0) {
+                  setIsGamePlaying(false);
+                  isPlaying = false;
+                  return;
+                }
+                splitAsteroid(asteroid, asteroids);
+                asteroid.radius = 0;
+                statsRef.current;
+                ship = createShip();
               }
             }
-            powerUpOrb = undefined;
+          });
+        }
+
+        if (asteroids.length === 0) {
+          statsRef.current.score += 100 * statsRef.current.wave;
+          statsRef.current.wave += 1;
+          FIRE_RATE = Math.max(8, 15 - statsRef.current.wave);
+          ship = createShip();
+          for (let i = 0; i < statsRef.current.wave + 3; i++) {
+            asteroids.push(spawnAsteroid());
           }
         }
-      }
 
-      if (ship.charged && ship.powerUpLife <= 0) {
-        ship = { ...ship, charged: undefined, powerUpLife: 0 };
-      }
+        if (powerUpOrb) {
+          if (powerUpOrb.life <= 0) {
+            powerUpOrb = undefined;
+          } else {
+            let pu = powerUpOrb;
+            powerUpOrb.life -= 1;
 
-      ctx.font = "bold 64px HyperSpace";
-      ctx.fillStyle = "white";
-      ctx.fillText(
-        "Score:" +
-          statsRef.current.score +
-          " - Lives:" +
-          statsRef.current.lives +
-          " - Wave:" +
-          statsRef.current.wave,
-        16,
-        64,
-      );
+            drawPowerUp(ctx, pu);
+            if (isColliding(pu, ship)) {
+              for (let i = 0; i < POWER_UPS.length; i++) {
+                if (POWER_UPS[i] === pu.spec) {
+                  ship = {
+                    ...ship,
+                    charged: POWER_UPS[i],
+                    powerUpLife: POWER_UPS[i].duration,
+                  };
+                }
+              }
+              powerUpOrb = undefined;
+            }
+          }
+        }
 
-      animationId = requestAnimationFrame(gameloop);
-    };
+        if (ship.charged && ship.powerUpLife <= 0) {
+          ship = { ...ship, charged: undefined, powerUpLife: 0 };
+        }
 
-    gameloop();
+        ctx.font = "bold 64px HyperSpace";
+        ctx.fillStyle = "white";
+        ctx.fillText(
+          "Score:" +
+            statsRef.current.score +
+            " - Lives:" +
+            statsRef.current.lives +
+            " - Wave:" +
+            statsRef.current.wave,
+          16,
+          64,
+        );
 
-    return () => cancelAnimationFrame(animationId);
+        animationId = requestAnimationFrame(gameloop);
+      };
+
+      gameloop();
+
+      return () => cancelAnimationFrame(animationId);
+    }
   }, [resetKey]);
 
   return (
@@ -452,16 +469,40 @@ const AboutGame = () => {
       {isGamePlaying ? (
         <canvas ref={canvasRef} style={{ border: "1px solid white" }} />
       ) : (
-        <div>
-          <p>Game Over</p>
+        <div className="font-[HyperSpace] font-extrabold flex flex-col items-center justify-center gap-8 cursor-default">
+          <AboutLogo />
+          <AboutSidebar />
+          <div className="fixed bottom-0 flex flex-row items-center justify-center w-full text-5xl my-10">
+            {resetKey === 0 ||
+            (statsRef.current.score === 0 && statsRef.current.wave === 1)
+              ? ""
+              : `Score:${statsRef.current.score} - Wave:${statsRef.current.wave}`}
+          </div>
+          <div
+            className="text-9xl transition-none my-10"
+            style={{ animation: "flash 1s infinite" }}
+          >
+            Meteors
+          </div>
           <button
+            className="w-full text-7xl hover:bg-white hover:text-black p-4 cursor-pointer font-normal hover:font-extrabold"
             onClick={() => {
               setIsGamePlaying(true);
               statsRef.current = DEFAULT_GAME_STATE;
               setResetKey((k) => k + 1);
             }}
           >
-            Play Again
+            Stats
+          </button>
+          <button
+            className="w-full text-7xl hover:bg-white hover:text-black p-4 cursor-pointer font-normal hover:font-extrabold"
+            onClick={() => {
+              setIsGamePlaying(true);
+              statsRef.current = DEFAULT_GAME_STATE;
+              setResetKey((k) => k + 1);
+            }}
+          >
+            {resetKey === 0 ? "Play Game" : "Play Again"}
           </button>
         </div>
       )}
