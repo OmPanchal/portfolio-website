@@ -4,20 +4,33 @@ import React, { useEffect, useRef, useState } from "react";
 const AboutGame = () => {
   let WIDTH = 0;
   let HEIGHT = 0;
+  const COLOURS = {
+    blue: {
+      on: "#3458eb",
+      off: "#34baeb",
+    },
+    red: {
+      on: "#e81c4f",
+      off: "#e6839b",
+    },
+    yellow: {
+      on: "#fcba03",
+      off: "white",
+    },
+  };
   const THRUST = 0.3;
   const FRICTION = 0.985;
   const ROTATION_SPEED = 0.075;
   const FIRE_RATE = 15;
   const POWER_UPS = [
-    { type: "I", colour: "#3458eb" },
-    { type: "R", colour: "white" },
-    { type: "T", colour: "white" },
+    { type: "I", colour: COLOURS.blue, duration: 360 },
+    { type: "R", colour: COLOURS.red, duration: 240 },
+    { type: "T", colour: COLOURS.yellow, duration: 240 },
   ];
   const DEFAULT_GAME_STATE = {
     score: 0,
     lives: 3,
     wave: 1,
-    currentPowerUp: undefined,
   };
 
   const canvasRef = useRef(null);
@@ -55,11 +68,11 @@ const AboutGame = () => {
     ctx.lineTo(-40, 40); // back-right wing
     ctx.closePath();
 
-    if (ship.inv > 0) {
-      if (Math.ceil(ship.inv / 4) % 2 === 0) {
-        ctx.strokeStyle = "#3458eb";
+    if (ship.charged && ship.powerUpLife > 0) {
+      if (Math.ceil(ship.powerUpLife / 4) % 2 === 0) {
+        ctx.strokeStyle = ship.charged.colour.on;
       } else {
-        ctx.strokeStyle = "#34baeb";
+        ctx.strokeStyle = ship.charged.colour.off;
       }
     } else {
       ctx.strokeStyle = "white";
@@ -93,15 +106,17 @@ const AboutGame = () => {
   }
 
   function drawPowerUp(ctx, powerUp) {
-    ctx.save();
-    ctx.translate(powerUp.x, powerUp.y);
     ctx.beginPath();
-    ctx.arc(powerUp.x, powerUp.y, 10, 0, Math.PI * 2);
-    ctx.closePath();
+    ctx.arc(powerUp.x, powerUp.y, powerUp.radius, 0, Math.PI * 2);
 
-    ctx.fillStyle = "white";
+    if (powerUp.life > 0) {
+      if (Math.ceil(powerUp.life / 4) % 2 === 0) {
+        ctx.fillStyle = powerUp.spec.colour.on;
+      } else {
+        ctx.fillStyle = powerUp.spec.colour.off;
+      }
+    }
     ctx.fill();
-    ctx.restore();
   }
 
   function updateShip(ship, keys) {
@@ -119,8 +134,11 @@ const AboutGame = () => {
     ship.x += ship.vx;
     ship.y += ship.vy;
 
-    if (ship.inv > 0) {
-      ship.inv -= 1;
+    if (ship.powerUpLife > 0) {
+      ship.powerUpLife -= 1;
+    }
+    if (ship.powerUpLife <= 0) {
+      ship.charged = undefined;
     }
   }
 
@@ -146,7 +164,8 @@ const AboutGame = () => {
       vx: 0,
       vy: 0,
       radius: 36,
-      inv: 240,
+      charged: POWER_UPS[0],
+      powerUpLife: 240,
     };
   }
 
@@ -168,7 +187,8 @@ const AboutGame = () => {
       x,
       y,
       spec: POWER_UPS[Math.floor(Math.random() * POWER_UPS.length)],
-      life: 480,
+      life: 240,
+      radius: 20,
     };
   }
 
@@ -227,19 +247,22 @@ const AboutGame = () => {
 
     if (keys.space && shootingState.cooldown <= 0) {
       bullets.push(createBullet(ship));
+      if (ship.charged && ship.charged.type === "T" && ship.powerUpLife > 0) {
+        bullets.push(createBullet(ship, Math.PI / 3));
+        bullets.push(createBullet(ship, -Math.PI / 3));
+      }
       shootingState.cooldown = FIRE_RATE;
     }
   }
 
-  function createBullet(ship) {
-    const speed = 28;
+  function createBullet(ship, delta = 0) {
+    const speed = 32;
     return {
       x: ship.x + Math.cos(ship.angle) * ship.radius,
       y: ship.y + Math.sin(ship.angle) * ship.radius,
-      vx: Math.cos(ship.angle) * speed,
-      vy: Math.sin(ship.angle) * speed,
+      vx: Math.cos(ship.angle + delta) * speed,
+      vy: Math.sin(ship.angle + delta) * speed,
       radius: 4,
-      angle: ship.angle,
       life: 45,
     };
   }
@@ -289,6 +312,7 @@ const AboutGame = () => {
     }
 
     let bullets = [];
+    let powerUpOrb = undefined;
 
     let animationId;
 
@@ -328,13 +352,11 @@ const AboutGame = () => {
               statsRef.current.score += 50;
             } else if (asteroid.radius === 40) {
               statsRef.current.score += 100;
-              // let flip = Math.random();
-              // if (flip < 1) {
-              statsRef.current.currentPowerUp = createPowerUp(
-                asteroid.x,
-                asteroid.y,
-              );
-              // }
+
+              let flip = Math.random();
+              if (flip < 1) {
+                powerUpOrb = createPowerUp(asteroid.x, asteroid.y);
+              }
             }
             splitAsteroid(asteroid, asteroids);
             asteroid.radius = 0;
@@ -342,19 +364,28 @@ const AboutGame = () => {
         });
       });
 
-      if (ship.inv <= 0) {
+      if (
+        !ship.charged ||
+        (ship.charged && ship.charged.type !== "I") ||
+        ship.powerUpLife <= 0
+      ) {
         asteroids.forEach((asteroid) => {
           if (isColliding(ship, asteroid)) {
-            statsRef.current.lives -= 1;
-            if (statsRef.current.lives < 0) {
-              setIsGamePlaying(false);
-              isPlaying = false;
-              return;
+            if (ship.charged && ship.charged.type === "R") {
+              splitAsteroid(asteroid, asteroids);
+              asteroid.radius = 0;
+            } else {
+              statsRef.current.lives -= 1;
+              if (statsRef.current.lives < 0) {
+                setIsGamePlaying(false);
+                isPlaying = false;
+                return;
+              }
+              splitAsteroid(asteroid, asteroids);
+              asteroid.radius = 0;
+              statsRef.current;
+              ship = createShip();
             }
-            splitAsteroid(asteroid, asteroids);
-            asteroid.radius = 0;
-            statsRef.current;
-            ship = createShip();
           }
         });
       }
@@ -368,8 +399,31 @@ const AboutGame = () => {
         }
       }
 
-      if (statsRef.current.currentPowerUp) {
-        drawPowerUp(ctx, statsRef.current.currentPowerUp);
+      if (powerUpOrb) {
+        if (powerUpOrb.life <= 0) {
+          powerUpOrb = undefined;
+        } else {
+          let pu = powerUpOrb;
+          powerUpOrb.life -= 1;
+
+          drawPowerUp(ctx, pu);
+          if (isColliding(pu, ship)) {
+            for (let i = 0; i < POWER_UPS.length; i++) {
+              if (POWER_UPS[i] === pu.spec) {
+                ship = {
+                  ...ship,
+                  charged: POWER_UPS[i],
+                  powerUpLife: POWER_UPS[i].duration,
+                };
+              }
+            }
+            powerUpOrb = undefined;
+          }
+        }
+      }
+
+      if (ship.charged && ship.powerUpLife <= 0) {
+        ship = { ...ship, charged: undefined, powerUpLife: 0 };
       }
 
       ctx.font = "bold 64px HyperSpace";
