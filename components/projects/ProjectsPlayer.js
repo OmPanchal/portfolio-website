@@ -40,13 +40,13 @@ const ProjectsPlayer = () => {
 
   return (
     <div
-      className={`lg:relative fixed lg:h-svh lg:w-[40%] w-full h-full bg-black lg:border-l lg:border-l-gray-800 z-10 duration-300 transition-all ${isProjectsPlayerOpen ? "bottom-0" : "lg:bottom-0 -bottom-full"} flex flex-col items-center justify-evenly overflow-hidden  no-scrollbar`}
+      className={`lg:relative fixed lg:h-svh lg:w-[40%] w-full h-full bg-black lg:border-l lg:border-l-gray-800 z-10 duration-300 transition-all ${isProjectsPlayerOpen ? "bottom-0" : "lg:bottom-0 -bottom-full"} flex flex-col items-center justify-start overflow-hidden  no-scrollbar`}
     >
       {queue[queueIdx] == null ? (
         <div>Nothing is playing yet</div>
       ) : (
         <>
-          <div className="w-full bg-black flex flex-row items-center justify-between lg:p-8 p-4">
+          <div className="w-full bg-black flex flex-row items-center justify-between lg:p-8 p-2">
             <MdOutlineKeyboardArrowDown
               className="lg:scale-0 scale-100 p-2 size-10"
               onClick={() => {
@@ -56,9 +56,8 @@ const ProjectsPlayer = () => {
           </div>
 
           {/* Main "player"*/}
-          <div className="flex flex-col w-full flex-1 bg-black lg:px-24 p-8 py-0 lg:gap-14 gap-6 mt-12">
-            <p className="lg:text-xl font-thin lg:px-6 px-4 lg:py-4 py-2 text-center ">
-              {/* TODO: Possibly allow for playlists as well*/}
+          <div className="flex flex-col w-full flex-1 bg-black lg:px-24 p-8 py-0 lg:gap-14 gap-3">
+            <p className="lg:text-xl font-thin lg:px-6 px-4 lg:py-4 py-2 text-center text-xs">
               Playing from <a className="font-normal">{currentAlbum.name}</a>
             </p>
             <img
