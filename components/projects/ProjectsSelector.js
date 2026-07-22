@@ -37,7 +37,7 @@ const ProjectsSelector = () => {
               >
                 {queue[queueIdx] === project &&
                 currentAlbum.name === "Featured Projects" ? (
-                  <div className="absolute top-0 lg:mt-2 mt-1.5 left-0 lg:w-84 w-32 lg:h-84 h-32 flex flex-row items-center justify-center bg-black/30">
+                  <div className="absolute top-0 lg:mt-2 mt-3 left-0 lg:w-84 w-32 lg:h-84 h-32 flex flex-row items-center justify-center bg-black/30">
                     <Image
                       src={logo}
                       alt="playing"
