@@ -9,13 +9,13 @@ const HomeSidebarLink = ({
   ...props
 }) => {
   return (
-    <Link href={href} {...props}>
+    <a href={href} {...props}>
       <HomeHeading
         className={`${selected ? "md:text-6xl text-3xl font-bold" : "transition-all hover:md:text-6xl duration-300"}`}
       >
         {children}
       </HomeHeading>
-    </Link>
+    </a>
   );
 };
 
