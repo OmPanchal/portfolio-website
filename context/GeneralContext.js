@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import projectsData from "../components/projects/projects.json";
+import { useWindowSize } from "@/hooks/useWindowSize";
 
 const GeneralContext = createContext();
 
@@ -31,6 +32,10 @@ export const GeneralProvider = ({ children }) => {
 
   const [currentProject, setCurrentProject] = useState(actualProjectsArray[0]);
 
+  const [isAboutStatsPageOpen, setIsAboutStatsPageOpen] = useState(true);
+  const [isAboutSidebarOpen, setIsAboutSidebarOpen] = useState(false);
+  const windowSize = useWindowSize();
+
   useEffect(() => {
     setCurrentProject(queue[queueIdx]);
   }, [queueIdx]);
@@ -53,6 +58,20 @@ export const GeneralProvider = ({ children }) => {
     }
   }, [currentAlbum]);
 
+  useEffect(() => {
+    if (windowSize.width < 640) {
+      setIsAboutSidebarOpen(false);
+    } else {
+      setIsAboutSidebarOpen(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (windowSize.width < 640) {
+      setIsAboutStatsPageOpen(true);
+    }
+  }, [windowSize]);
+
   const obj = {
     isProjectsSidebarOpen,
     setIsProjectsSidebarOpen,
@@ -74,6 +93,10 @@ export const GeneralProvider = ({ children }) => {
     setIsInformationTabOpen,
     albums,
     setAlbums,
+    isAboutStatsPageOpen,
+    setIsAboutStatsPageOpen,
+    isAboutSidebarOpen,
+    setIsAboutSidebarOpen,
   };
   return (
     <GeneralContext.Provider value={obj}>{children}</GeneralContext.Provider>
