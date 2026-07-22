@@ -2,38 +2,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import AboutLogo from "./AboutLogo";
 import AboutSidebar from "./AboutSidebar";
+import AboutStatsPage from "./AboutStatsPage";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { useGlobals } from "@/context/GeneralContext";
+import { COLOURS, POWER_UPS } from "@/utils/constants";
 
 const AboutGame = () => {
   let WIDTH = 0;
   let HEIGHT = 0;
-  const COLOURS = {
-    blue: {
-      on: "#3458eb",
-      off: "#34baeb",
-    },
-    red: {
-      on: "#e81c4f",
-      off: "#e6839b",
-    },
-    yellow: {
-      on: "#fcba03",
-      off: "white",
-    },
-    purple: {
-      on: "#ad07fa",
-      off: "#d07ff5",
-    },
-  };
+  let FIRE_RATE = 15;
   const THRUST = 0.3;
   const FRICTION = 0.985;
   const ROTATION_SPEED = 0.075;
-  let FIRE_RATE = 15;
-  const POWER_UPS = [
-    { type: "I", colour: COLOURS.blue, duration: 480 },
-    { type: "R", colour: COLOURS.red, duration: 360 },
-    { type: "T", colour: COLOURS.yellow, duration: 480 },
-    { type: "M", colour: COLOURS.purple, duration: 300 },
-  ];
   const DEFAULT_GAME_STATE = {
     score: 0,
     lives: 3,
@@ -51,6 +31,8 @@ const AboutGame = () => {
   const statsRef = useRef(DEFAULT_GAME_STATE);
   const [isGamePlaying, setIsGamePlaying] = useState(false);
   const [resetKey, setResetKey] = useState(0);
+  const { setIsAboutStatsPageOpen } = useGlobals();
+  const windowSize = useWindowSize();
 
   function wrapPosition(object) {
     if (object.x < 0) object.x = WIDTH;
@@ -469,42 +451,42 @@ const AboutGame = () => {
       {isGamePlaying ? (
         <canvas ref={canvasRef} style={{ border: "1px solid white" }} />
       ) : (
-        <div className="font-[HyperSpace] font-extrabold flex flex-col items-center justify-center gap-8 cursor-default">
-          <AboutLogo />
+        <>
+          {windowSize.width >= 640 && (
+            <div className="font-[HyperSpace] font-extrabold flex flex-col items-center justify-center gap-8 cursor-default">
+              <div
+                className="fixed bottom-0 flex flex-row items-center justify-center w-full text-5xl my-10"
+                style={{ animation: "flash 1s infinite" }}
+              >
+                {resetKey === 0 ||
+                (statsRef.current.score === 0 && statsRef.current.wave === 1)
+                  ? ""
+                  : `Score:${statsRef.current.score} - Wave:${statsRef.current.wave}`}
+              </div>
+              <div className="text-9xl transition-none my-10">Meteors</div>
+              <button
+                className="w-full text-7xl hover:bg-white hover:text-black p-4 cursor-pointer font-normal hover:font-extrabold"
+                onClick={() => {
+                  setIsAboutStatsPageOpen(true);
+                }}
+              >
+                Stats/Controls
+              </button>
+              <button
+                className="w-full text-7xl hover:bg-white hover:text-black p-4 cursor-pointer font-normal hover:font-extrabold"
+                onClick={() => {
+                  setIsGamePlaying(true);
+                  statsRef.current = DEFAULT_GAME_STATE;
+                  setResetKey((k) => k + 1);
+                }}
+              >
+                {resetKey === 0 ? "Play Game" : "Play Again"}
+              </button>
+            </div>
+          )}
           <AboutSidebar />
-          <div className="fixed bottom-0 flex flex-row items-center justify-center w-full text-5xl my-10">
-            {resetKey === 0 ||
-            (statsRef.current.score === 0 && statsRef.current.wave === 1)
-              ? ""
-              : `Score:${statsRef.current.score} - Wave:${statsRef.current.wave}`}
-          </div>
-          <div
-            className="text-9xl transition-none my-10"
-            style={{ animation: "flash 1s infinite" }}
-          >
-            Meteors
-          </div>
-          <button
-            className="w-full text-7xl hover:bg-white hover:text-black p-4 cursor-pointer font-normal hover:font-extrabold"
-            onClick={() => {
-              setIsGamePlaying(true);
-              statsRef.current = DEFAULT_GAME_STATE;
-              setResetKey((k) => k + 1);
-            }}
-          >
-            Stats
-          </button>
-          <button
-            className="w-full text-7xl hover:bg-white hover:text-black p-4 cursor-pointer font-normal hover:font-extrabold"
-            onClick={() => {
-              setIsGamePlaying(true);
-              statsRef.current = DEFAULT_GAME_STATE;
-              setResetKey((k) => k + 1);
-            }}
-          >
-            {resetKey === 0 ? "Play Game" : "Play Again"}
-          </button>
-        </div>
+          <AboutStatsPage />
+        </>
       )}
     </>
   );
