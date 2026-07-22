@@ -27,3 +27,29 @@ export const projectsIcons = {
   github: <FaGithub className="lg:size-12 size-6" />,
   other: <FaLink className="lg:size-12 size-6" />,
 };
+
+export const COLOURS = {
+  blue: {
+    on: "#3458eb",
+    off: "#34baeb",
+  },
+  red: {
+    on: "#e81c4f",
+    off: "#e6839b",
+  },
+  yellow: {
+    on: "#fcba03",
+    off: "white",
+  },
+  purple: {
+    on: "#ad07fa",
+    off: "#d07ff5",
+  },
+};
+
+export const POWER_UPS = [
+  { type: "I", colour: COLOURS.blue, duration: 420, name: "Invincibility" },
+  { type: "R", colour: COLOURS.red, duration: 420, name: "Rampage" },
+  { type: "T", colour: COLOURS.yellow, duration: 300, name: "Triple Shot" },
+  { type: "M", colour: COLOURS.purple, duration: 360, name: "Machine Gun" },
+];
