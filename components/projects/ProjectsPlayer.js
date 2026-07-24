@@ -56,7 +56,7 @@ const ProjectsPlayer = () => {
           </div>
 
           {/* Main "player"*/}
-          <div className="flex flex-col w-full flex-1 bg-black lg:px-24 p-8 py-0 lg:gap-14 gap-3">
+          <div className="flex flex-col w-full flex-1 bg-black lg:px-24 p-8 py-0 lg:gap-14 gap-6 overflow-auto">
             <p className="lg:text-xl font-thin lg:px-6 px-4 lg:py-4 py-2 text-center text-xs">
               Playing from <a className="font-normal">{currentAlbum.name}</a>
             </p>

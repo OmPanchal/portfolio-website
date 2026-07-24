@@ -21,8 +21,8 @@ const ProjectsSelector = () => {
   } = useGlobals();
 
   return (
-    <div className="max-h-full flex-1 max-w-full flex flex-col items-start justify-start">
-      <div className="lg:p-12 p-6 flex w-full flex-col lg:gap-8 gap-4 relative">
+    <div className="max-h-[full] flex-1 max-w-full flex flex-col items-start justify-start overflow-auto">
+      <div className="lg:p-12 p-6 flex w-full flex-col lg:gap-8 gap-4 relative shrink-0">
         <p className="lg:text-4xl text-xl font-bold">Featured Projects</p>
         <HorizontalScroll className="flex flex-row max-w-full overflow-x-auto lg:gap-8 gap-4 no-scrollbar">
           {projects.map((project, idx) => {
@@ -101,6 +101,7 @@ const ProjectsSelector = () => {
             );
           })}
         </HorizontalScroll>
+        <div className="sm:h-0 h-18"></div>
       </div>
     </div>
   );

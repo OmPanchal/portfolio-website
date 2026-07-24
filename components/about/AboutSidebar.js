@@ -44,7 +44,7 @@ const AboutSidebar = ({ state, setState }) => {
             setIsAboutSidebarOpen(false);
           }}
         >
-          {"<"}
+          {"<"} Close
         </div>
       )}
     </div>
