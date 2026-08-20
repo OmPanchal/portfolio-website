@@ -70,7 +70,7 @@ const AboutStatsPage = () => {
               />
               <AboutStatsRow
                 colour="white"
-                name="Spawnpoint"
+                name="Based"
                 description="London"
               />
               <AboutStatsRow
